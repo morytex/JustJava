@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 
 /**
@@ -20,15 +22,32 @@ public class MainActivity extends AppCompatActivity {
         price = 2;
         setContentView(R.layout.activity_main);
         display(order);
-        displayPrice(order * price);
     }
 
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
+        String total = NumberFormat.getCurrencyInstance().format(order * price);
+        String priceMessage = "Total: " + total;
+        priceMessage = priceMessage + "\nThank you!";
+        displayMessage(priceMessage);
+    }
+
+    /**
+     * This method is called when the + button is clicked.
+     */
+    public void increment(View view) {
         display(++order);
-        displayPrice(order * price);
+    }
+
+    /**
+     * This method is called when the - button is clicked.
+     */
+    public void decrement(View view) {
+        if (order > 0) {
+            display(--order);
+        }
     }
 
     /**
@@ -39,8 +58,19 @@ public class MainActivity extends AppCompatActivity {
         quantityTextView.setText("" + number);
     }
 
+    /**
+     * This method displays the given price on the screen.
+     */
     private void displayPrice(int number) {
         TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
         priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+    }
+
+    /**
+     * This method displays the given text on the screen.
+     */
+    private void displayMessage(String message) {
+        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
+        priceTextView.setText(message);
     }
 }
